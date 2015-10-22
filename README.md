@@ -19,9 +19,9 @@ This project uses Flickr API, Angular JS, HTML5 and Bootstrap. This pulls pictur
 
 ## Live link 
 I created a github page for this project. 
+
 The link is : http://soumyaat.github.io/Flickr-Web-Application/
 
-## Screenshots 
 
 
 
