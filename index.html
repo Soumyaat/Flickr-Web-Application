@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>Flickr NASA </title>
+
+		<link href="style.css" rel="stylesheet" />
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+<body ng-app='myApp' ng-controller="FlickrApiController">
+	<div class="container">
+		<section class="row">
+		<div class="bar">
+		<!-- These two buttons switch the layout varaible, which causes the correct UL to be shown. -->
+			<input type="text" ng-model="query" placeholder="Search within results">
+			<a href="#" class="grid-icon" ng-class="{active: layout == 'grid'}" ng-click="layout = 'grid'"></a>
+			<a href="#" class="list-icon" ng-class="{active: layout == 'list'}" ng-click="layout = 'list'"></a>
+		</div>
+		<div class="pull-right"><h5>Sort by:
+			<select ng-model="orderProp">
+				<option value="-datetaken">Newest</option>
+				<option value="datetaken">Oldest</option>
+			</select></h5>
+			Current Search/Sort terms are [ {{query}} / {{orderProp}} ] 
+		</div>
+			
+		<div>
+			<button class="btn btn-primary pull-left" ng-click="loadNextPage()">
+			 Load More
+			</button>
+		</div>
+		</section>
+		<section>
+			<ul ng-show="layout == 'grid'" class="grid span3">
+					<!-- A view with big photos and no text -->
+					<li ng-repeat="p in photos.photo | filter:query | orderBy:orderProp">
+					<figure>
+						<a ng-href="{{p.url_l}}">
+						<img ng-src="{{p.url_n}}" class="img-responsive" alt="{{ p.title }}" >	
+					</figure>				
+					</li>
+			</ul>
+
+			<ul ng-show="layout == 'list'" class="list">
+					<!-- A compact view smaller photos and titles -->
+				<li ng-repeat="p in photos.photo  | filter:query | orderBy:orderProp">
+						<figure>
+							<a ng-href="{{p.url_l}}">
+							<img ng-src="{{p.url_n}}" class="img-responsive" alt="{{ p.title }}" >	
+							{{p.title}}<br>
+							<small>Tags: [ {{p.tags}} ]</small>
+						</figure> 
+
+				</li>
+			</ul>		 
+		</section>
+    </div>
+		<!-- Include AngularJS from Google's CDN and the resource module -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="script.js"></script>
+</body>
+</html>
